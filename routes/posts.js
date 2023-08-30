@@ -3,6 +3,7 @@ const router = express.Router({mergeParams: true});
 const auth = require('./helpers/auth');
 const Room = require('../models/room');
 const Post = require('../models/post');
+const commentsRouter = require('./comments');
 
 // Posts new
 router.get('/new', auth.requireLogin, (req, res, next) => {
@@ -22,4 +23,5 @@ router.post('/', auth.requireLogin, (req, res, next) => {
     .catch ((err) => console.log(err));
 })
 
+router.use('/:postId/comments', commentsRouter);
 module.exports = router;

@@ -22,7 +22,7 @@ router.get('/new', auth.requireLogin, (req, res, next) => {
 router.get('/:id', auth.requireLogin, (req, res, next) => {
   Room.findById(req.params.id)
   .then((room) => {
-    Post.find({ room: room })
+    Post.find({ room: room }).populate('comments').exec()
       .then((posts) => res.render('rooms/show', { room: room , posts: posts }))
       .catch((err) => console.error(err));
   })

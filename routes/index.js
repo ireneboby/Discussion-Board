@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const User = require('../models/user');
 
+
 // set layout variables
 router.use(function(req, res, next) {
   res.locals.title = "RedditClone";
