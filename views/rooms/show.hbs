@@ -15,13 +15,12 @@
           <span class="points-span">{{post.points}} points </span>
           <div class="btn-group btn-group-sm">
             <form action="/rooms/{{post.room}}/posts/{{post.id}}" method="post" class="inline-form">
-              <input type="hidden" name="points" id="post-points" value="-1">
-              <button type="submit" class="btn btn-success">-</button>
-            </form>
-
-            <form action="/rooms/{{post.room}}/posts/{{post.id}}" method="post" class="inline-form">
               <input type="hidden" name="points" id="post-points" value="1">
-              <button type="submit" class="btn btn-danger">+</button>
+              <button type="submit" class="btn btn-success">+</button>
+            </form>
+            <form action="/rooms/{{post.room}}/posts/{{post.id}}" method="post" class="inline-form">
+              <input type="hidden" name="points" id="post-points" value="-1">
+              <button type="submit" class="btn btn-danger">-</button>
             </form>
           </div>
         </div>
