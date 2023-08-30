@@ -9,6 +9,10 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+// configure sessions
+const session = require('express-session');
+app.use(session({ secret: 'secret-unique-code', cookie: { maxAge: 3600000 }, resave: true, saveUninitialized: true }));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -38,4 +42,16 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// Database setup
+const mongoose = require('mongoose');
+const mongoURI = 'mongodb+srv://ireneboby:C98qF@cluster0.b2uuceu.mongodb.net/?retryWrites=true&w=majority';
+
+mongoose.connect(mongoURI)
+mongoose.Promise = global.Promise;
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// End of database set up
+
+//username: ireneboby
+//password: C98qF
 module.exports = app;
