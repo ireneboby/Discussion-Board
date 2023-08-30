@@ -24,7 +24,11 @@ router.post('/', auth.requireLogin, (req, res, next) => {
         .then((post) => {
             let comment = new Comment(req.body);
             post.comments.unshift(comment);
-            post.save().then(()=> res.redirect(`/rooms/${room._id}`)).catch((err) => console.log(err));
+            post.save().
+            then(()=> {
+                comment.save().then(() => res.redirect(`/rooms/${room._id}`)).catch((err) => console.log(err));
+            })
+            .catch((err) => console.log(err));
         })
         .catch ((err) => console.error(err));
     })
