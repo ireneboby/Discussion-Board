@@ -25,12 +25,16 @@ router.get('/:id', auth.requireLogin, (req, res, next) => {
 
 // Rooms edit
 router.get('/:id/edit', auth.requireLogin, (req, res, next) => {
-  // TODO
+  Room.findById(req.params.id)
+  .then((room) => res.render('rooms/edit', { room: room }))
+  .catch ((err) => console.error(err));
 });
 
 // Rooms update
 router.post('/:id', auth.requireLogin, (req, res, next) => {
-  // TODO
+  Room.findByIdAndUpdate(req.params.id, req.body)
+  .then(() => res.redirect('/rooms/' + req.params.id))
+  .catch ((err) => console.error(err));
 });
 
 // Rooms create
