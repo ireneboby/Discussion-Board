@@ -19,10 +19,10 @@ router.get('/new', auth.requireLogin, (req, res, next) => {
   });
 
 // Rooms show
-router.get('/:id', auth.requireLogin, (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   Room.findById(req.params.id)
   .then((room) => {
-    Post.find({ room: room }).populate('comments').exec()
+    Post.find({ room: room }).sort({ points: -1 }).populate('comments').exec()
       .then((posts) => res.render('rooms/show', { room: room , posts: posts }))
       .catch((err) => console.error(err));
   })

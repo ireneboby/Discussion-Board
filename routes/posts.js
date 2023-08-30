@@ -23,5 +23,17 @@ router.post('/', auth.requireLogin, (req, res, next) => {
     .catch ((err) => console.log(err));
 })
 
+// Posts update points
+router.post('/:id', auth.requireLogin, (req, res, next) => {
+    Post.findById(req.params.id)
+    .then ((post) => {
+        post.points += parseInt(req.body.points);
+        post.save().then(()=> res.redirect(`/rooms/${post.room}`)).catch((err) => console.log(err));
+    })
+    .catch ((err) => console.log(err));
+})
+
+
+
 router.use('/:postId/comments', commentsRouter);
 module.exports = router;
