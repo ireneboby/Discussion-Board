@@ -3,6 +3,8 @@ const router = express.Router();
 
 const auth = require('./helpers/auth');
 const Room = require('../models/room');
+const posts = require('./posts');
+const Post = require('../models/post');
 
 // Rooms index
 router.get('/', (req, res, next) => {
@@ -19,7 +21,11 @@ router.get('/new', auth.requireLogin, (req, res, next) => {
 // Rooms show
 router.get('/:id', auth.requireLogin, (req, res, next) => {
   Room.findById(req.params.id)
-  .then((room) => res.render('rooms/show', { room: room }))
+  .then((room) => {
+    Post.find({ room: room })
+      .then((posts) => res.render('rooms/show', { room: room , posts: posts }))
+      .catch((err) => console.error(err));
+  })
   .catch ((err) => console.error(err));
 });
 
@@ -43,4 +49,5 @@ router.post('/', auth.requireLogin, (req, res, next) => {
     room.save().then(()=> res.redirect('/rooms')).catch((err) => console.log(err));
 });
 
+router.use('/:roomId/posts', posts);
 module.exports = router;
